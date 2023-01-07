@@ -162,7 +162,7 @@ void poseMount(){
 void setup(){
     pinMode(0,OUTPUT);     // setup user LED
     digitalWrite(0, HIGH); // turn user LED on to show the program is running
-    Serial.begin(38400);
+    Serial.begin(115200);
     Encoders.Begin();
     //Set up Camera Mount
     pan = DEFAULT_PAN;//load default pan value for startup
@@ -186,12 +186,12 @@ void loop(){
   parseMessage();
   // Update the postion of the mount
   poseMount();
-  speedR = speedForward + speedRotate;
+  speedR = -1*(speedForward + speedRotate);
   speedL = speedForward - speedRotate;
   //dutyL = (unsigned long)((15 + 5*speedL/2) * frequency * resolution/10000);
   //dutyR = (unsigned long)((15 + 5*speedR/2) * frequency * resolution/10000);
-  dutyL = map(speedL,-1300,1300, 2000,4100); 
-  dutyR = map(speedR,-1300,1300, 2000,4100);
+  dutyL = map(speedL,-1000,1000, 2000,4000); 
+  dutyR = map(speedR,-1000,1000, 2000,4000);
   // ENCODERS CURRENTLY NOT BEING USED: Read the Encoder values 
   if(countL!= Encoders.left || countR != Encoders.right){
     //printEncoderCounts();
